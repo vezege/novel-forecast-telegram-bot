@@ -62,11 +62,8 @@ def make_prediction(model, text):
 def find_review_type_in_kb(model_index):
     result_review_type = None
     for review in positivity_rules['Positivity Status']:
-        # print(review)
         min_max = positivity_rules['Positivity Status'][review]
-        # print(min_max)
         r = range(min_max[-1], min_max[0] + 1)
-        # print(r)
         if model_index in r:
             result_review_type = review
             print(result_review_type)
@@ -77,9 +74,8 @@ def find_review_type_in_kb(model_index):
 # In[ ]:
 
 
-loaded_model = tf.keras.saving.load_model('trained_model v085.keras')
+loaded_model = tf.keras.saving.load_model('novel-forecast.keras')
 bot = telebot.TeleBot('6788157679:AAHgf9IHeLAuLzcx-Al0Dfg3FU11l4_Xvno')
-predicted_reviews_count = 0
 
 
 # In[ ]:
@@ -145,7 +141,6 @@ def echo_all(message):
         prediction_array = prediction
         max_index = numpy.argmax(prediction_array)
         result_message = find_review_type_in_kb(max_index + 1)
-        predicted_reviews_count += 1
         bot.reply_to(message,
                      f'Hello I am a book review telegram bot, my prediction is: {result_message}!')  # bot.reply_to(message, f'The prediction is: {prediction}')
     else:
